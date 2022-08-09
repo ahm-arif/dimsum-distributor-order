@@ -89,7 +89,6 @@ elseif ($_GET['alert'] == 3) { ?>
 									<th>Pengirim</th>
 									<th>Penerima</th>
 									<th>Barang</th>
-									<th>Biaya Kirim</th>
 									<th>Status</th>
 									<th></th>
 								</tr>
@@ -98,13 +97,11 @@ elseif ($_GET['alert'] == 3) { ?>
 							<tbody>
 							<?php
 							$no = 1;
-							// fungsi query untuk menampilkan data dari tabel pengiriman, ikan masuk, ikan, nelayan dan pembeli
-							$query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
-															b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat,
-															c.no_polisi,c.supir,
-															d.no_ktp as id_supir,d.nama_supir
-															FROM pengiriman as a INNER JOIN pelanggan as b INNER JOIN kendaraan as c INNER JOIN supir as d
-															ON a.pengirim=b.no_ktp AND a.kendaraan=c.no_polisi AND c.supir=d.no_ktp
+							// fungsi query untuk menampilkan data dari tabel pengiriman
+							$query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
+															b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
+															FROM pengiriman as a INNER JOIN pelanggan as b
+															ON a.penerima=b.no_ktp 
 															ORDER BY a.no_pengiriman DESC")
 															or die('Ada kesalahan pada query tampil data pengiriman: '.mysqli_error($mysqli));
 
@@ -119,10 +116,9 @@ elseif ($_GET['alert'] == 3) { ?>
 										<a href="?module=form_pengiriman&form=detail&id=<?php echo $data['no_pengiriman']; ?>"><?php echo $data['no_pengiriman']; ?></a>
 									</td>
 									<td width="40" class="center"><?php echo $tgl_pengiriman; ?></td>
+									<td width="120"><?php echo $data['pengirim']; ?> <br></td>
 									<td width="120"><?php echo $data['nama_pelanggan']; ?> <br></td>
-									<td width="120"><?php echo $data['penerima']; ?> <br></td>
 									<td width="120"><?php echo $data['nama_barang']; ?></td>
-									<td width="100" align="right">Rp. <?php echo format_rupiah_nol($data['biaya_kirim']); ?></td>
 									<td width="100"><?php echo $data['status']; ?></td>
 
 									<td width="80" class="center">

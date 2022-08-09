@@ -63,7 +63,7 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 
 			            // buat no_pengiriman
 			            $huruf         = "OR-";
-			            $hurufakhir    = "-JKT";
+			            $hurufakhir    = 000;
 						$year          = gmdate("y");
 						$buat_id       = str_pad($kode, 12, "0", STR_PAD_LEFT);
 						$no_pengiriman = "$huruf$year$buat_id$hurufakhir";
@@ -137,7 +137,12 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 						<label class="col-sm-2 control-label no-padding-right">Nama Barang</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="nama_barang" autocomplete="off" required />
+							<div class="input-group">
+								<input type="text" class="form-control" id="nama_barang" name="nama_barang" readonly required />
+								<a class="input-group-addon" data-toggle="modal" href="#modal-form1">
+									<i class="ace-icon fa fa-search"></i>
+								</a>
+							</div>
 						</div>
 					</div>
 
@@ -149,7 +154,7 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 						</div>
 					</div>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Berat</label>
 
 						<div class="col-sm-4">
@@ -192,7 +197,7 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="nama_supir" name="nama_supir" autocomplete="off" readonly required />
 						</div>
-					</div>
+					</div> -->
 
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-2 col-md-10">
@@ -273,7 +278,7 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="blue bigger">Data Kendaraan</h4>
+					<h4 class="blue bigger">Data Barang</h4>
 				</div>
 
 				<div class="modal-body">
@@ -283,9 +288,9 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>No. Kendaraan</th>
-										<th>Merk</th>
-										<th>Supir</th>
+										<th>Nama Barang</th>
+										<th>Kategori</th>
+										<th>Deskripsi</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -294,25 +299,24 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 								<?php
 								$no = 1;
 								// fungsi query untuk menampilkan data dari tabel ikan masuk, ikan dan nelayan
-								$query = mysqli_query($mysqli, "SELECT * FROM kendaraan as a INNER JOIN supir as b 
-																ON a.supir=b.no_ktp 
-																ORDER BY a.no_polisi DESC")
+								$query = mysqli_query($mysqli, "SELECT * FROM barang
+																ORDER BY nama ASC")
 																or die('Ada kesalahan pada query tampil data pelanggan: '.mysqli_error($mysqli));
 
 	                            while ($data = mysqli_fetch_assoc($query)) { 
-									$no_polisi  = $data['no_polisi'];
-									$merk       = $data['merk'];
-									$nama_supir = $data['nama_supir'];
+									$nama_barang  = $data['nama'];
+									$kategori       = $data['kategori'];
+									$deskripsi = $data['deskripsi'];
 	                            ?>
 	                            	<tr>
 										<td width="30" class="center"><?php echo $no; ?></td>
-										<td width="100" class="center"><?php echo $no_polisi; ?></td>
-										<td width="150"><?php echo $merk; ?></td>
-										<td width="150"><?php echo $nama_supir; ?></td>
+										<td width="150"><?php echo $nama_barang; ?></td>
+										<td width="50"><?php echo $kategori; ?></td>
+										<td width="250"><?php echo $deskripsi; ?></td>
 
 										<td width="50" class="center">
 											<div class="action-buttons">
-												<button data-rel="tooltip" data-placement="top" title="Pilih" class="pilih_kendaraan tooltip-info btn btn-primary btn-xs" data-id-k="<?php echo $no_polisi; ?>" data-nama-s="<?php echo $nama_supir; ?>">
+												<button data-rel="tooltip" data-placement="top" title="Pilih" class="pilih_barang tooltip-info btn btn-primary btn-xs" data-id-k="<?php echo $nama_barang; ?>">
 													<i class="ace-icon fa fa-check bigger-130 icon-only"></i>
 												</button>
 											</div>
@@ -349,12 +353,10 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 
 	<!-- Javascript untuk popup modal Edit--> 
 	<script type="text/javascript">
-	   	$(document).on('click','.pilih_kendaraan',function(){
-			var no_polisi  = $(this).attr('data-id-k');
-			var nama_supir = $(this).attr('data-nama-s');
+	   	$(document).on('click','.pilih_barang',function(){
+			var nama_barang  = $(this).attr('data-id-k');
 
-			$('#no_polisi').val(no_polisi);
-			$('#nama_supir').val(nama_supir);
+			$('#nama_barang').val(nama_barang);
 
   		   	$("#modal-form1").modal('hide');
 	    });
@@ -517,7 +519,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 						</div>
 					</div>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Berat</label>
 
 						<div class="col-sm-4">
@@ -560,7 +562,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="nama_supir" name="nama_supir" autocomplete="off" value="<?php echo $nama_supir; ?>" readonly required />
 						</div>
-					</div>
+					</div> -->
 					
 					<div class="hr hr-16 dotted"></div>
 
@@ -716,7 +718,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 
 										<td width="50" class="center">
 											<div class="action-buttons">
-												<button data-rel="tooltip" data-placement="top" title="Pilih" class="pilih_kendaraan tooltip-info btn btn-primary btn-xs" data-id-k="<?php echo $no_polisi; ?>" data-nama-s="<?php echo $nama_supir; ?>">
+												<button data-rel="tooltip" data-placement="top" title="Pilih" class="pilih_barang tooltip-info btn btn-primary btn-xs" data-id-k="<?php echo $no_polisi; ?>" data-nama-s="<?php echo $nama_supir; ?>">
 													<i class="ace-icon fa fa-check bigger-130 icon-only"></i>
 												</button>
 											</div>
@@ -739,13 +741,13 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 	<!-- Javascript untuk popup modal Edit--> 
 	<script type="text/javascript">
 	   	$(document).on('click','.pilih_pelanggan',function(){
-			var id_pengirim     = $(this).attr('data-id-p');
-			var nama_pengirim   = $(this).attr('data-nama-p');
-			var alamat_pengirim = $(this).attr('data-alamat-p');
+			var id_penerima     = $(this).attr('data-id-p');
+			var penerima   = $(this).attr('data-nama-p');
+			var alamat_penerima = $(this).attr('data-alamat-p');
 
-			$('#id_pengirim').val(id_pengirim);
-			$('#pengirim').val(nama_pengirim);
-			$('#alamat_pengirim').val(alamat_pengirim);
+			$('#id_penerima').val(id_penerima);
+			$('#penerima').val(penerima);
+			$('#alamat_penerima').val(alamat_penerima);
 
   		   	$("#modal-form").modal('hide');
 	    });
@@ -753,12 +755,10 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 
 	<!-- Javascript untuk popup modal Edit--> 
 	<script type="text/javascript">
-	   	$(document).on('click','.pilih_kendaraan',function(){
-			var no_polisi  = $(this).attr('data-id-k');
-			var nama_supir = $(this).attr('data-nama-s');
+	   	$(document).on('click','.pilih_barang',function(){
+			var nama_barang  = $(this).attr('data-id-k');
 
-			$('#no_polisi').val(no_polisi);
-			$('#nama_supir').val(nama_supir);
+			$('#nama_barang').val(nama_barang);
 
   		   	$("#modal-form1").modal('hide');
 	    });
@@ -769,12 +769,10 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
-	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
-										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat,
-										c.no_polisi,c.supir,
-										d.no_ktp as id_supir,d.nama_supir
+	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.status,
+										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
 										FROM pengiriman as a INNER JOIN pelanggan as b INNER JOIN kendaraan as c INNER JOIN supir as d
-										ON a.pengirim=b.no_ktp AND a.kendaraan=c.no_polisi AND c.supir=d.no_ktp
+										ON a.pengirim=b.no_ktp
 										WHERE a.no_pengiriman='$_GET[id]'")
 	    								or die('Ada kesalahan pada query tampil data ubah : '.mysqli_error($mysqli));
 	    $data  = mysqli_fetch_assoc($query);
@@ -793,9 +791,6 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 		$nama_barang     = $data['nama_barang'];
 		$jumlah_barang   = $data['jumlah_barang'];
 		$berat_barang    = $data['berat_barang'];
-		$biaya_kirim     = $data['biaya_kirim'];
-		$no_polisi       = $data['no_polisi'];
-		$nama_supir      = $data['nama_supir'];
 		$status          = $data['status'];
 	}
 ?>
@@ -910,7 +905,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 						</div>
 					</div>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Biaya Kirim</label>
 
 						<div class="col-sm-4">
@@ -939,7 +934,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 						</div>
 					</div>
 
-					<div class="hr hr-16 dotted"></div>
+					<div class="hr hr-16 dotted"></div> -->
 
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Status</label>

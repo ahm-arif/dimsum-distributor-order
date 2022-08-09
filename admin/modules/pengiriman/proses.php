@@ -20,18 +20,15 @@ else {
             $tgl             = explode('-',$tanggal);
             $tgl_pengiriman  = $tgl[2]."-".$tgl[1]."-".$tgl[0];
 
-            $id_pengirim     = mysqli_real_escape_string($mysqli, trim($_POST['id_pengirim']));
+            $pengirim     = mysqli_real_escape_string($mysqli, trim($_POST['pengirim']));
             $penerima        = mysqli_real_escape_string($mysqli, trim($_POST['penerima']));
             $alamat_penerima = mysqli_real_escape_string($mysqli, trim($_POST['alamat_penerima']));
             $nama_barang     = mysqli_real_escape_string($mysqli, trim($_POST['nama_barang']));
             $jumlah_barang   = mysqli_real_escape_string($mysqli, trim($_POST['jumlah_barang']));
-            $berat_barang    = mysqli_real_escape_string($mysqli, trim($_POST['berat_barang']));
-            $biaya_kirim     = str_replace('.','', mysqli_real_escape_string($mysqli, trim($_POST['biaya_kirim'])));
-            $no_polisi       = mysqli_real_escape_string($mysqli, trim($_POST['no_polisi']));
 
             // perintah query untuk menyimpan data ke tabel pengiriman
-            $query = mysqli_query($mysqli, "INSERT INTO pengiriman(no_pengiriman,tgl_pengiriman,pengirim,penerima,alamat_penerima,nama_barang,jumlah_barang,berat_barang,biaya_kirim,kendaraan)
-                                            VALUES('$no_pengiriman','$tgl_pengiriman','$id_pengirim','$penerima','$alamat_penerima','$nama_barang','$jumlah_barang','$berat_barang','$biaya_kirim','$no_polisi')")
+            $query = mysqli_query($mysqli, "INSERT INTO pengiriman(no_pengiriman,tgl_pengiriman,pengirim,penerima,alamat_penerima,nama_barang,jumlah_barang)
+                                            VALUES('$no_pengiriman','$tgl_pengiriman','$pengirim','$id_penerima','$alamat_penerima','$nama_barang','$jumlah_barang')")
                                             or die('Ada kesalahan pada query insert : '.mysqli_error($mysqli));    
 
             // cek query
@@ -58,9 +55,6 @@ else {
                 $nama_barang     = mysqli_real_escape_string($mysqli, trim($_POST['nama_barang']));
                 $jumlah_barang   = mysqli_real_escape_string($mysqli, trim($_POST['jumlah_barang']));
                 $berat_barang    = mysqli_real_escape_string($mysqli, trim($_POST['berat_barang']));
-                $biaya_kirim     = str_replace('.','', mysqli_real_escape_string($mysqli, trim($_POST['biaya_kirim'])));
-                $no_polisi       = mysqli_real_escape_string($mysqli, trim($_POST['no_polisi']));
-                $status          = mysqli_real_escape_string($mysqli, trim($_POST['status']));
                 
                 // perintah query untuk mengubah data pada tabel pengiriman
                 $query = mysqli_query($mysqli, "UPDATE pengiriman SET   tgl_pengiriman  = '$tgl_pengiriman',
@@ -69,9 +63,6 @@ else {
                                                                         alamat_penerima = '$alamat_penerima',
                                                                         nama_barang     = '$nama_barang',
                                                                         jumlah_barang   = '$jumlah_barang',
-                                                                        berat_barang    = '$berat_barang',
-                                                                        biaya_kirim     = '$biaya_kirim',
-                                                                        kendaraan       = '$no_polisi',
                                                                         status          = '$status'
                                                                   WHERE no_pengiriman   = '$no_pengiriman'")
                                                 or die('Ada kesalahan pada query update : '.mysqli_error($mysqli));
