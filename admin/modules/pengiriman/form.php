@@ -1,7 +1,7 @@
 <?php
 // fungsi untuk pengecekan tampilan form
 // jika form add data yang dipilih
-if ($_GET['form']=='add') { ?>
+if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 	<script type="text/javascript">
 		function hitung_berat() {
 	        bil1 = document.frmpengiriman.berat_barang.value;
@@ -62,8 +62,8 @@ if ($_GET['form']=='add') { ?>
 			            }
 
 			            // buat no_pengiriman
-			            $huruf         = "DO-";
-			            $hurufakhir    = "-MEL";
+			            $huruf         = "OR-";
+			            $hurufakhir    = "-JKT";
 						$year          = gmdate("y");
 						$buat_id       = str_pad($kode, 12, "0", STR_PAD_LEFT);
 						$no_pengiriman = "$huruf$year$buat_id$hurufakhir";
@@ -94,9 +94,28 @@ if ($_GET['form']=='add') { ?>
 						<label class="col-sm-2 control-label no-padding-right">Nama Pengirim</label>
 
 						<div class="col-sm-4">
+								<input type="hidden" id="id_pengirim" name="id_pengirim" /> <!-- form updated -->
+								<input type="text" class="form-control" id="pengirim" name="pengirim" value="Stockist Pesanggrahan" readonly required />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label no-padding-right">Alamat</label>
+
+						<div class="col-sm-4">
+							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required>Jalan Gelora no.11 Pesanggrahan Jakarta Selatan</textarea>
+						</div>
+					</div>
+
+					<div class="hr hr-16 dotted"></div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label no-padding-right">Nama Penerima</label>
+
+						<div class="col-sm-4">
 							<div class="input-group">
-								<input type="hidden" id="id_pengirim" name="id_pengirim" />
-								<input type="text" class="form-control" id="pengirim" name="pengirim" readonly required />
+								<input type="hidden" id="id_penerima" name="id_penerima" />
+								<input type="text" class="form-control" id="penerima" name="penerima" readonly required />
 								<a class="input-group-addon" data-toggle="modal" href="#modal-form">
 									<i class="ace-icon fa fa-search"></i>
 								</a>
@@ -108,25 +127,7 @@ if ($_GET['form']=='add') { ?>
 						<label class="col-sm-2 control-label no-padding-right">Alamat</label>
 
 						<div class="col-sm-4">
-							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required></textarea>
-						</div>
-					</div>
-
-					<div class="hr hr-16 dotted"></div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Penerima</label>
-
-						<div class="col-sm-4">
-							<input type="text" class="form-control" name="penerima" autocomplete="off" required />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Alamat</label>
-
-						<div class="col-sm-4">
-							<textarea class="form-control" name="alamat_penerima" rows="2" required></textarea>
+							<textarea class="form-control" id="alamat_penerima" name="alamat_penerima" rows="2" readonly required></textarea>
 						</div>
 					</div>
 
@@ -334,13 +335,13 @@ if ($_GET['form']=='add') { ?>
 	<!-- Javascript untuk popup modal Edit--> 
 	<script type="text/javascript">
 	   	$(document).on('click','.pilih_pelanggan',function(){
-			var id_pengirim     = $(this).attr('data-id-p');
-			var nama_pengirim   = $(this).attr('data-nama-p');
-			var alamat_pengirim = $(this).attr('data-alamat-p');
+			var id_penerima     = $(this).attr('data-id-p');
+			var nama_penerima   = $(this).attr('data-nama-p');
+			var alamat_penerima = $(this).attr('data-alamat-p');
 
-			$('#id_pengirim').val(id_pengirim);
-			$('#pengirim').val(nama_pengirim);
-			$('#alamat_pengirim').val(alamat_pengirim);
+			$('#id_penerima').val(id_penerima);
+			$('#penerima').val(nama_penerima);
+			$('#alamat_penerima').val(alamat_penerima);
 
   		   	$("#modal-form").modal('hide');
 	    });
@@ -361,7 +362,7 @@ if ($_GET['form']=='add') { ?>
 <?php
 }
 // jika form edit data yang dipilih
-elseif ($_GET['form']=='edit') {
+elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
 	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
@@ -765,7 +766,7 @@ elseif ($_GET['form']=='edit') {
 <?php
 }
 // jika form edit data yang dipilih
-elseif ($_GET['form']=='detail') {
+elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
 	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
