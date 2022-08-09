@@ -122,8 +122,8 @@ if ($_SESSION['hak_akses']=='Admin') { ?>
     <?php
     }
 
-    // jika menu supir dipilih, menu supir aktif
-    if ($_GET["module"] == "supir" || $_GET["module"] == "form_supir") { ?>
+    // jika menu barang dipilih, menu barang aktif
+    if ($_GET["module"] == "barang" || $_GET["module"] == "form_barang") { ?>
         <li class="active open">
             <a href="javascript:void(0);" class="dropdown-toggle">
                 <i class="menu-icon fa fa-folder-o"></i>
@@ -135,20 +135,20 @@ if ($_SESSION['hak_akses']=='Admin') { ?>
 
             <ul class="submenu">
                 <li class="active">
-                    <a href="?module=supir">
+                    <a href="?module=barang">
                         <i class="menu-icon fa fa-angle-double-right"></i>
-                        Supir
+                        Barang
                     </a>
                     <b class="arrow"></b>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="?module=kendaraan">
                         <i class="menu-icon fa fa-angle-double-right"></i>
                         Kendaraan
                     </a>
                     <b class="arrow"></b>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="?module=pelanggan">
@@ -161,45 +161,7 @@ if ($_SESSION['hak_akses']=='Admin') { ?>
         </li>
     <?php
     } 
-    // jika menu kendaraan dipilih, menu kendaraan aktif
-    elseif ($_GET["module"] == "kendaraan" || $_GET["module"] == "form_kendaraan") { ?>
-        <li class="active open">
-            <a href="javascript:void(0);" class="dropdown-toggle">
-                <i class="menu-icon fa fa-folder-o"></i>
-                <span class="menu-text"> Data Master </span>
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
 
-            <b class="arrow"></b>
-
-            <ul class="submenu">
-                <li>
-                    <a href="?module=supir">
-                        <i class="menu-icon fa fa-angle-double-right"></i>
-                        Supir
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-
-                <li class="active">
-                    <a href="?module=kendaraan">
-                        <i class="menu-icon fa fa-angle-double-right"></i>
-                        Kendaraan
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-
-                <li>
-                    <a href="?module=pelanggan">
-                        <i class="menu-icon fa fa-angle-double-right"></i>
-                        Pelanggan
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-            </ul>
-        </li>
-    <?php
-    } 
     // jika menu pelanggan dipilih, menu pelanggan aktif
     elseif ($_GET["module"] == "pelanggan" || $_GET["module"] == "form_pelanggan") { ?>
         <li class="active open">
@@ -213,20 +175,13 @@ if ($_SESSION['hak_akses']=='Admin') { ?>
 
             <ul class="submenu">
                 <li>
-                    <a href="?module=supir">
+                    <a href="?module=barang">
                         <i class="menu-icon fa fa-angle-double-right"></i>
-                        Supir
+                        Barang
                     </a>
                     <b class="arrow"></b>
                 </li>
 
-                <li>
-                    <a href="?module=kendaraan">
-                        <i class="menu-icon fa fa-angle-double-right"></i>
-                        Kendaraan
-                    </a>
-                    <b class="arrow"></b>
-                </li>
 
                 <li class="active">
                     <a href="?module=pelanggan">
@@ -252,20 +207,20 @@ if ($_SESSION['hak_akses']=='Admin') { ?>
 
             <ul class="submenu">
                 <li>
-                    <a href="?module=supir">
+                    <a href="?module=barang">
                         <i class="menu-icon fa fa-angle-double-right"></i>
-                        Supir
+                        Barang
                     </a>
                     <b class="arrow"></b>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="?module=kendaraan">
                         <i class="menu-icon fa fa-angle-double-right"></i>
                         Kendaraan
                     </a>
                     <b class="arrow"></b>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="?module=pelanggan">

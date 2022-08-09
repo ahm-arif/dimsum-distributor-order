@@ -31,11 +31,6 @@ else {
 	}
 	// ---------------------------------------------------------------------------------
 
-	// jika halaman konten yang dipilih supir, panggil file view supir
-	elseif ($_GET['module']=='supir') {
-		include "modules/supir/view.php";
-	}
-
 	// jika halaman konten yang dipilih form supir, panggil file form supir
 	elseif ($_GET['module']=='form_supir') {
 		include "modules/supir/form.php";
@@ -89,6 +84,17 @@ else {
 	// jika halaman konten yang dipilih form pengguna, panggil file form pengguna
 	elseif ($_GET['module']=='form_pengguna') {
 		include "modules/pengguna/form.php";
+	}
+	// ---------------------------------------------------------------------------------
+
+	// jika halaman konten yang dipilih barang, panggil file view barang
+	elseif ($_GET['module']=='barang') {
+		include "modules/barang/view.php";
+	}
+
+	// jika halaman konten yang dipilih barang, panggil file form barang
+	elseif ($_GET['module']=='form_barang') {
+		include "modules/barang/form.php";
 	}
 	// ---------------------------------------------------------------------------------
 
