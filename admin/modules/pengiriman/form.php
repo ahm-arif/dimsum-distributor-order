@@ -63,10 +63,10 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 
 			            // buat no_pengiriman
 			            $huruf         = "OR-";
-			            $hurufakhir    = 000;
+			            $idDistributor    = 001;
 						$year          = gmdate("y");
 						$buat_id       = str_pad($kode, 12, "0", STR_PAD_LEFT);
-						$no_pengiriman = "$huruf$year$buat_id$hurufakhir";
+						$no_pengiriman = "$huruf$year$idDistributor$buat_id";
 						?>
 						<label class="col-sm-2 control-label no-padding-right">No. Pengiriman</label>
 
@@ -766,13 +766,13 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 <?php
 }
 // jika form edit data yang dipilih
-elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
+elseif (isset($_GET['form']) ? $_GET['form'] : "" == 'detail') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
 	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.status,
 										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
-										FROM pengiriman as a INNER JOIN pelanggan as b INNER JOIN kendaraan as c INNER JOIN supir as d
-										ON a.pengirim=b.no_ktp
+										FROM pengiriman as a INNER JOIN pelanggan as b
+										ON a.penerima=b.no_ktp
 										WHERE a.no_pengiriman='$_GET[id]'")
 	    								or die('Ada kesalahan pada query tampil data ubah : '.mysqli_error($mysqli));
 	    $data  = mysqli_fetch_assoc($query);
@@ -790,7 +790,6 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 		$alamat_penerima = $data['alamat_penerima'];
 		$nama_barang     = $data['nama_barang'];
 		$jumlah_barang   = $data['jumlah_barang'];
-		$berat_barang    = $data['berat_barang'];
 		$status          = $data['status'];
 	}
 ?>
@@ -890,11 +889,11 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 						<label class="col-sm-2 control-label no-padding-right">Jumlah</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="jumlah_barang"  autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" value="<?php echo $jumlah_barang; ?>" readonly required />
+							<input type="text" class="form-control" name="jumlah_barang"  autocomplete="off" value="<?php echo $jumlah_barang; ?>" readonly required />
 						</div>
 					</div>
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Berat</label>
 
 						<div class="col-sm-4">
@@ -903,7 +902,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 								<span class="input-group-addon">Kg</span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Biaya Kirim</label>
@@ -922,7 +921,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 						<label class="col-sm-2 control-label no-padding-right">Kendaraan</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="no_polisi" name="no_polisi" value="<?php echo $no_polisi; ?>" readonly required />
+							<input type="text" class="form-control" id="no_polisi" name="no_polisi" value="" readonly required />
 						</div>
 					</div>
 
@@ -930,7 +929,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='detail') {
 						<label class="col-sm-2 control-label no-padding-right">Supir</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="nama_supir" name="nama_supir" autocomplete="off" value="<?php echo $nama_supir; ?>" readonly required />
+							<input type="text" class="form-control" id="nama_supir" name="nama_supir" autocomplete="off" value="" readonly required />
 						</div>
 					</div>
 

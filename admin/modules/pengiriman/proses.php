@@ -20,7 +20,8 @@ else {
             $tgl             = explode('-',$tanggal);
             $tgl_pengiriman  = $tgl[2]."-".$tgl[1]."-".$tgl[0];
 
-            $pengirim     = mysqli_real_escape_string($mysqli, trim($_POST['pengirim']));
+            $id_penerima     = mysqli_real_escape_string($mysqli, trim($_POST['id_penerima']));
+            $pengirim        = mysqli_real_escape_string($mysqli, trim($_POST['pengirim']));
             $penerima        = mysqli_real_escape_string($mysqli, trim($_POST['penerima']));
             $alamat_penerima = mysqli_real_escape_string($mysqli, trim($_POST['alamat_penerima']));
             $nama_barang     = mysqli_real_escape_string($mysqli, trim($_POST['nama_barang']));
