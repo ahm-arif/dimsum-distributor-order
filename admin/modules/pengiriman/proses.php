@@ -26,10 +26,11 @@ else {
             $alamat_penerima = mysqli_real_escape_string($mysqli, trim($_POST['alamat_penerima']));
             $nama_barang     = mysqli_real_escape_string($mysqli, trim($_POST['nama_barang']));
             $jumlah_barang   = mysqli_real_escape_string($mysqli, trim($_POST['jumlah_barang']));
+            $status          = 'Proses Pengiriman';
 
             // perintah query untuk menyimpan data ke tabel pengiriman
-            $query = mysqli_query($mysqli, "INSERT INTO pengiriman(no_pengiriman,tgl_pengiriman,pengirim,penerima,alamat_penerima,nama_barang,jumlah_barang)
-                                            VALUES('$no_pengiriman','$tgl_pengiriman','$pengirim','$id_penerima','$alamat_penerima','$nama_barang','$jumlah_barang')")
+            $query = mysqli_query($mysqli, "INSERT INTO pengiriman(no_pengiriman,tgl_pengiriman,pengirim,penerima,alamat_penerima,nama_barang,jumlah_barang,status)
+                                            VALUES('$no_pengiriman','$tgl_pengiriman','$pengirim','$id_penerima','$alamat_penerima','$nama_barang','$jumlah_barang','$status')")
                                             or die('Ada kesalahan pada query insert : '.mysqli_error($mysqli));    
 
             // cek query
