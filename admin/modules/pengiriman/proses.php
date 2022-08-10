@@ -50,17 +50,14 @@ else {
                 $tgl             = explode('-',$tanggal);
                 $tgl_pengiriman  = $tgl[2]."-".$tgl[1]."-".$tgl[0];
                 
-                $id_pengirim     = mysqli_real_escape_string($mysqli, trim($_POST['id_pengirim']));
-                $penerima        = mysqli_real_escape_string($mysqli, trim($_POST['penerima']));
+                $id_penerima     = mysqli_real_escape_string($mysqli, trim($_POST['id_penerima']));
                 $alamat_penerima = mysqli_real_escape_string($mysqli, trim($_POST['alamat_penerima']));
                 $nama_barang     = mysqli_real_escape_string($mysqli, trim($_POST['nama_barang']));
                 $jumlah_barang   = mysqli_real_escape_string($mysqli, trim($_POST['jumlah_barang']));
-                $berat_barang    = mysqli_real_escape_string($mysqli, trim($_POST['berat_barang']));
                 
                 // perintah query untuk mengubah data pada tabel pengiriman
                 $query = mysqli_query($mysqli, "UPDATE pengiriman SET   tgl_pengiriman  = '$tgl_pengiriman',
-                                                                        pengirim        = '$id_pengirim',
-                                                                        penerima        = '$penerima',
+                                                                        penerima        = '$id_penerima',
                                                                         alamat_penerima = '$alamat_penerima',
                                                                         nama_barang     = '$nama_barang',
                                                                         jumlah_barang   = '$jumlah_barang',

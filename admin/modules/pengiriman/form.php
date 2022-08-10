@@ -1,7 +1,7 @@
 <?php
 // fungsi untuk pengecekan tampilan form
 // jika form add data yang dipilih
-if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
+if (isset($_GET['form']) && $_GET['form'] =='add') { ?>
 	<script type="text/javascript">
 		function hitung_berat() {
 	        bil1 = document.frmpengiriman.berat_barang.value;
@@ -95,7 +95,7 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 
 						<div class="col-sm-4">
 								<input type="hidden" id="id_pengirim" name="id_pengirim" /> <!-- form updated -->
-								<input type="text" class="form-control" id="pengirim" name="pengirim" value="Stockist Pesanggrahan" readonly required />
+								<input type="text" class="form-control" id="pengirim" name="pengirim" value="Stockis Pesanggrahan" readonly required />
 						</div>
 					</div>
 
@@ -153,51 +153,6 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 							<input type="text" class="form-control" name="jumlah_barang"  autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" required />
 						</div>
 					</div>
-
-					<!-- <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Berat</label>
-
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input type="text" class="form-control" id="berat_barang" name="berat_barang" autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" onkeyup="hitung_berat(this)" required />
-								<span class="input-group-addon">Kg</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Biaya Kirim</label>
-
-						<div class="col-sm-4">
-							<div class="input-group">
-								<span class="input-group-addon">Rp</span>
-								<input type="text" class="form-control" id="biaya_kirim" name="biaya_kirim" autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" readonly required />
-							</div>
-						</div>
-					</div>
-
-					<div class="hr hr-16 dotted"></div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Kendaraan</label>
-
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input type="text" class="form-control" id="no_polisi" name="no_polisi" readonly required />
-								<a class="input-group-addon" data-toggle="modal" href="#modal-form1">
-									<i class="ace-icon fa fa-search"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Supir</label>
-
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="nama_supir" name="nama_supir" autocomplete="off" readonly required />
-						</div>
-					</div> -->
 
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-2 col-md-10">
@@ -364,10 +319,10 @@ if (isset($_GET['form']) ? $_GET['form'] : "" =='add') { ?>
 <?php
 }
 // jika form edit data yang dipilih
-elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
+elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
-	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
+	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.status,
 										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
 										FROM pengiriman as a INNER JOIN pelanggan as b
 										ON a.penerima=b.no_ktp
@@ -381,10 +336,9 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 		$tgl             = explode('-',$tanggal);
 		$tgl_pengiriman  = $tgl[2]."-".$tgl[1]."-".$tgl[0];
 		
-		$no_ktp          = $data['id_pelanggan'];
-		$pengirim        = $data['nama_pelanggan'];
+		$id_penerima     = $data['penerima'];
 		$alamat_pengirim = $data['alamat'];
-		$penerima        = $data['penerima'];
+		$nama_penerima   = $data['nama_pelanggan'];
 		$alamat_penerima = $data['alamat_penerima'];
 		$nama_barang     = $data['nama_barang'];
 		$jumlah_barang   = $data['jumlah_barang'];
@@ -460,8 +414,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 
 						<div class="col-sm-4">
 							<div class="input-group">
-								<input type="hidden" id="id_pengirim" name="id_pengirim" value="<?php echo $no_ktp; ?>" />
-								<input type="text" class="form-control" id="pengirim" name="pengirim" value="<?php echo $pengirim; ?>" readonly required />
+								<input type="text" class="form-control" id="pengirim" name="pengirim" value="Stockis Pesanggrahan" readonly required />
 								<a class="input-group-addon" data-toggle="modal" href="#modal-form">
 									<i class="ace-icon fa fa-search"></i>
 								</a>
@@ -473,17 +426,23 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 						<label class="col-sm-2 control-label no-padding-right">Alamat</label>
 
 						<div class="col-sm-4">
-							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required><?php echo $alamat_pengirim; ?></textarea>
+							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required>Jalan Gelora no.11 Pesanggrahan Jakarta Selatan</textarea>
 						</div>
 					</div>
 
 					<div class="hr hr-16 dotted"></div>
 
 					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Penerima</label>
+						<label class="col-sm-2 control-label no-padding-right">Nama Penerima</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="penerima" autocomplete="off" value="<?php echo $penerima; ?>" required />
+							<div class="input-group">
+								<input type="hidden" id="id_penerima" name="id_penerima" value="<?php echo $id_penerima; ?>"/>
+								<input type="text" class="form-control" id="penerima" name="penerima" value="<?php echo $nama_penerima; ?>" readonly required />
+								<a class="input-group-addon" data-toggle="modal" href="#modal-form">
+									<i class="ace-icon fa fa-search"></i>
+								</a>
+							</div>
 						</div>
 					</div>
 
@@ -513,51 +472,6 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 						</div>
 					</div>
 
-					<!-- <div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Berat</label>
-
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input type="text" class="form-control" name="berat_barang" autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" onkeyup="hitung_berat(this)" value="<?php echo $berat_barang; ?>" required />
-								<span class="input-group-addon">Kg</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Biaya Kirim</label>
-
-						<div class="col-sm-4">
-							<div class="input-group">
-								<span class="input-group-addon">Rp</span>
-								<input type="text" class="form-control" id="biaya_kirim" name="biaya_kirim" autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" value="<?php echo format_rupiah_nol($biaya_kirim); ?>" readonly required />
-							</div>
-						</div>
-					</div>
-
-					<div class="hr hr-16 dotted"></div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Kendaraan</label>
-
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input type="text" class="form-control" id="no_polisi" name="no_polisi" value="<?php echo $no_polisi; ?>" readonly required />
-								<a class="input-group-addon" data-toggle="modal" href="#modal-form1">
-									<i class="ace-icon fa fa-search"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right">Supir</label>
-
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="nama_supir" name="nama_supir" autocomplete="off" value="<?php echo $nama_supir; ?>" readonly required />
-						</div>
-					</div> -->
-					
 					<div class="hr hr-16 dotted"></div>
 
 					<div class="form-group">
@@ -568,7 +482,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 							<?php  
 							if ($status=='Proses Pengiriman') { ?>
 								<label>
-									<input type="radio" class="ace" name="status" value="Proses Pengiriman" checked="" />
+									<input type="radio" class="ace" name="status" value="Proses Pengiriman" checked/>
 									<span class="lbl"> Proses Pengiriman</span>
 								</label>
 
@@ -584,7 +498,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 								</label>
 
 								<label>
-									<input type="radio" class="ace" name="status" value="Barang Terkirim" checked="" />
+									<input type="radio" class="ace" name="status" value="Barang Terkirim" checked/>
 									<span class="lbl"> Barang Terkirim</span>
 								</label>
 							<?php
@@ -757,7 +671,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 <?php
 }
 // jika form edit data yang dipilih
-elseif (isset($_GET['form']) ? $_GET['form'] : "" == 'detail') {
+elseif (isset($_GET['form']) && $_GET['form'] == 'detail') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
 	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.status,
