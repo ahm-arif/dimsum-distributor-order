@@ -89,13 +89,24 @@ if (isset($_GET['form']) && $_GET['form'] =='add') { ?>
 					</div>
 
 					<div class="hr hr-16 dotted"></div>
+					
+					<?php
+					// fungsi query untuk menampilkan data distributor dari tabel pelanggan 
+								$query_distributor = mysqli_query($mysqli, "SELECT nama_pelanggan,alamat FROM pelanggan
+																WHERE is_distributor = 'Y'
+																ORDER BY nama_pelanggan ASC")
+																or die('Ada kesalahan pada query tampil data pelanggan: '.mysqli_error($mysqli));
+
+	                            $data = mysqli_fetch_assoc($query_distributor); 
+									$nama_distributor 	= $data['nama_pelanggan'];
+									$alamat_distributor = $data['alamat'];
+									?>
 
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Nama Pengirim</label>
 
 						<div class="col-sm-4">
-								<input type="hidden" id="id_pengirim" name="id_pengirim" /> <!-- form updated -->
-								<input type="text" class="form-control" id="pengirim" name="pengirim" value="Stockis Pesanggrahan" readonly required />
+								<input type="text" class="form-control" id="pengirim" name="pengirim" value="<?php echo $nama_distributor;?>" readonly required />
 						</div>
 					</div>
 
@@ -103,7 +114,7 @@ if (isset($_GET['form']) && $_GET['form'] =='add') { ?>
 						<label class="col-sm-2 control-label no-padding-right">Alamat</label>
 
 						<div class="col-sm-4">
-							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required>Jalan Gelora no.11 Pesanggrahan Jakarta Selatan</textarea>
+							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required><?php echo $alamat_distributor;?></textarea>
 						</div>
 					</div>
 
@@ -194,6 +205,7 @@ if (isset($_GET['form']) && $_GET['form'] =='add') { ?>
 								$no = 1;
 								// fungsi query untuk menampilkan data dari tabel ikan masuk, ikan dan nelayan
 								$query = mysqli_query($mysqli, "SELECT no_ktp,nama_pelanggan,alamat FROM pelanggan
+																WHERE is_distributor = 'N'
 																ORDER BY nama_pelanggan ASC")
 																or die('Ada kesalahan pada query tampil data pelanggan: '.mysqli_error($mysqli));
 
@@ -323,7 +335,7 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
 	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.status,
-										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
+										b.no_ktp as id_pelanggan,b.nama_pelanggan
 										FROM pengiriman as a INNER JOIN pelanggan as b
 										ON a.penerima=b.no_ktp
 										WHERE a.no_pengiriman='$_GET[id]'")
@@ -337,7 +349,6 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 		$tgl_pengiriman  = $tgl[2]."-".$tgl[1]."-".$tgl[0];
 		
 		$id_penerima     = $data['penerima'];
-		$alamat_pengirim = $data['alamat'];
 		$nama_penerima   = $data['nama_pelanggan'];
 		$alamat_penerima = $data['alamat_penerima'];
 		$nama_barang     = $data['nama_barang'];
@@ -409,12 +420,24 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 
 					<div class="hr hr-16 dotted"></div>
 
+					<?php
+					// fungsi query untuk menampilkan data distributor dari tabel pelanggan 
+					$query_distributor = mysqli_query($mysqli, "SELECT nama_pelanggan,alamat FROM pelanggan
+													WHERE is_distributor = 'Y'
+													ORDER BY nama_pelanggan ASC")
+													or die('Ada kesalahan pada query tampil data pelanggan: '.mysqli_error($mysqli));
+
+					$data = mysqli_fetch_assoc($query_distributor); 
+						$nama_distributor 	= $data['nama_pelanggan'];
+						$alamat_distributor = $data['alamat'];
+						?>
+
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right">Nama Pengirim</label>
 
 						<div class="col-sm-4">
 							<div class="input-group">
-								<input type="text" class="form-control" id="pengirim" name="pengirim" value="Stockis Pesanggrahan" readonly required />
+								<input type="text" class="form-control" id="pengirim" name="pengirim" value="<?php echo $nama_distributor; ?>" readonly required />
 								<a class="input-group-addon" data-toggle="modal" href="#modal-form">
 									<i class="ace-icon fa fa-search"></i>
 								</a>
@@ -426,7 +449,7 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 						<label class="col-sm-2 control-label no-padding-right">Alamat</label>
 
 						<div class="col-sm-4">
-							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required>Jalan Gelora no.11 Pesanggrahan Jakarta Selatan</textarea>
+							<textarea class="form-control" id="alamat_pengirim" name="alamat_pengirim" rows="2" readonly required><?php echo $alamat_distributor; ?></textarea>
 						</div>
 					</div>
 
@@ -546,8 +569,9 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 								<tbody>
 								<?php
 								$no = 1;
-								// fungsi query untuk menampilkan data dari tabel ikan masuk, ikan dan nelayan
+								// fungsi query untuk menampilkan data dari tabel pelanggan
 								$query = mysqli_query($mysqli, "SELECT no_ktp,nama_pelanggan,alamat FROM pelanggan
+																WHERE is_distributor = 'N'
 																ORDER BY nama_pelanggan ASC")
 																or die('Ada kesalahan pada query tampil data pelanggan: '.mysqli_error($mysqli));
 
