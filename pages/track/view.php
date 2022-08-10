@@ -51,11 +51,9 @@
                 <?php  
                 if (isset($_POST['no_pengiriman'])) { 
                     $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
-                                                    b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat,
-                                                    c.no_polisi,c.supir,
-                                                    d.no_ktp as id_supir,d.nama_supir
+                                                    b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
                                                     FROM pengiriman as a INNER JOIN pelanggan as b INNER JOIN kendaraan as c INNER JOIN supir as d
-                                                    ON a.pengirim=b.no_ktp AND a.kendaraan=c.no_polisi AND c.supir=d.no_ktp
+                                                    ON a.penerima=b.no_ktp
                                                     WHERE a.no_pengiriman='$_POST[no_pengiriman]'
                                                     ORDER BY a.no_pengiriman DESC")
                                                     or die('Ada kesalahan pada query tampil data pengiriman: '.mysqli_error($mysqli));
@@ -83,7 +81,7 @@
                                 <td><strong><?php echo tgl_eng_to_ind($tgl_pengiriman); ?></strong></td>
                             </tr>
                             <tr>
-                                <td>Pengirim</td>
+                                <td>Penerima</td>
                                 <td>:</td>
                                 <td><strong><?php echo $data['nama_pelanggan']; ?></strong></td>
                             </tr>
