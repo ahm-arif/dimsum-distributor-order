@@ -368,11 +368,9 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 	if (isset($_GET['id'])) {
 	    // fungsi query untuk menampilkan data dari tabel pengiriman
 	    $query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.penerima,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
-										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat,
-										c.no_polisi,c.supir,
-										d.no_ktp as id_supir,d.nama_supir
-										FROM pengiriman as a INNER JOIN pelanggan as b INNER JOIN kendaraan as c INNER JOIN supir as d
-										ON a.pengirim=b.no_ktp AND a.kendaraan=c.no_polisi AND c.supir=d.no_ktp
+										b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
+										FROM pengiriman as a INNER JOIN pelanggan as b
+										ON a.penerima=b.no_ktp
 										WHERE a.no_pengiriman='$_GET[id]'")
 	    								or die('Ada kesalahan pada query tampil data ubah : '.mysqli_error($mysqli));
 	    $data  = mysqli_fetch_assoc($query);
@@ -390,14 +388,10 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 		$alamat_penerima = $data['alamat_penerima'];
 		$nama_barang     = $data['nama_barang'];
 		$jumlah_barang   = $data['jumlah_barang'];
-		$berat_barang    = $data['berat_barang'];
-		$biaya_kirim     = $data['biaya_kirim'];
-		$no_polisi       = $data['no_polisi'];
-		$nama_supir      = $data['nama_supir'];
 		$status          = $data['status'];
 	}
 ?>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function hitung_berat() {
 	        bil1 = document.frmpengiriman.berat_barang.value;
 	        if (bil1=='') {
@@ -408,7 +402,7 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 	        };
 	        document.frmpengiriman.biaya_kirim.value=(hasil);
 	    }
-	</script>
+	</script> -->
 
 	<div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
 		<ul class="breadcrumb">
@@ -700,25 +694,22 @@ elseif (isset($_GET['form']) ? $_GET['form'] : "" =='edit') {
 								<?php
 								$no = 1;
 								// fungsi query untuk menampilkan data dari tabel ikan masuk, ikan dan nelayan
-								$query = mysqli_query($mysqli, "SELECT * FROM kendaraan as a INNER JOIN supir as b 
-																ON a.supir=b.no_ktp 
-																ORDER BY a.no_polisi DESC")
+								$query = mysqli_query($mysqli, "SELECT * FROM barang
+																ORDER BY nama_barang ASC")
 																or die('Ada kesalahan pada query tampil data pelanggan: '.mysqli_error($mysqli));
 
 	                            while ($data = mysqli_fetch_assoc($query)) { 
-									$no_polisi  = $data['no_polisi'];
-									$merk       = $data['merk'];
-									$nama_supir = $data['nama_supir'];
+									$nama_barang  = $data['nama_barang'];
 	                            ?>
 	                            	<tr>
 										<td width="30" class="center"><?php echo $no; ?></td>
-										<td width="100" class="center"><?php echo $no_polisi; ?></td>
-										<td width="150"><?php echo $merk; ?></td>
-										<td width="150"><?php echo $nama_supir; ?></td>
+										<td width="100" class="center"><?php echo $nama_barang; ?></td>
+										<td width="150"><?php echo $kategori; ?></td>
+										<td width="150"><?php echo $deskripsi; ?></td>
 
 										<td width="50" class="center">
 											<div class="action-buttons">
-												<button data-rel="tooltip" data-placement="top" title="Pilih" class="pilih_barang tooltip-info btn btn-primary btn-xs" data-id-k="<?php echo $no_polisi; ?>" data-nama-s="<?php echo $nama_supir; ?>">
+												<button data-rel="tooltip" data-placement="top" title="Pilih" class="pilih_barang tooltip-info btn btn-primary btn-xs" data-id-k="<?php echo $id; ?>" data-nama-s="<?php echo $id; ?>">
 													<i class="ace-icon fa fa-check bigger-130 icon-only"></i>
 												</button>
 											</div>
