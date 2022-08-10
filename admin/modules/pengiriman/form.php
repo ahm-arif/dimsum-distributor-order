@@ -468,7 +468,7 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 						<label class="col-sm-2 control-label no-padding-right">Jumlah</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="jumlah_barang"  autocomplete="off" onKeyPress="return goodchars(event,'0123456789',this)" value="<?php echo $jumlah_barang; ?>" required />
+							<input type="text" class="form-control" name="jumlah_barang"  autocomplete="off" value="<?php echo $jumlah_barang; ?>" required />
 						</div>
 					</div>
 
@@ -482,7 +482,7 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 							<?php  
 							if ($status=='Proses Pengiriman') { ?>
 								<label>
-									<input type="radio" class="ace" name="status" value="Proses Pengiriman" checked/>
+									<input type="radio" class="ace" name="status" value="Proses Pengiriman" checked="" />
 									<span class="lbl"> Proses Pengiriman</span>
 								</label>
 
@@ -498,7 +498,7 @@ elseif (isset($_GET['form']) && $_GET['form'] =='edit') {
 								</label>
 
 								<label>
-									<input type="radio" class="ace" name="status" value="Barang Terkirim" checked/>
+									<input type="radio" class="ace" name="status" value="Barang Terkirim" checked="" />
 									<span class="lbl"> Barang Terkirim</span>
 								</label>
 							<?php

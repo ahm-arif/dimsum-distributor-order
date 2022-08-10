@@ -54,7 +54,8 @@ else {
                 $alamat_penerima = mysqli_real_escape_string($mysqli, trim($_POST['alamat_penerima']));
                 $nama_barang     = mysqli_real_escape_string($mysqli, trim($_POST['nama_barang']));
                 $jumlah_barang   = mysqli_real_escape_string($mysqli, trim($_POST['jumlah_barang']));
-                
+                $status          = mysqli_real_escape_string($mysqli, trim($_POST['status']));
+
                 // perintah query untuk mengubah data pada tabel pengiriman
                 $query = mysqli_query($mysqli, "UPDATE pengiriman SET   tgl_pengiriman  = '$tgl_pengiriman',
                                                                         penerima        = '$id_penerima',

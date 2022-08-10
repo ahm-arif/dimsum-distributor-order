@@ -98,7 +98,7 @@ elseif ($_GET['alert'] == 3) { ?>
 							<?php
 							$no = 1;
 							// fungsi query untuk menampilkan data dari tabel pengiriman
-							$query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.berat_barang,a.biaya_kirim,a.kendaraan,a.status,
+							$query = mysqli_query($mysqli, "SELECT a.no_pengiriman,a.tgl_pengiriman,a.pengirim,a.alamat_penerima,a.nama_barang,a.jumlah_barang,a.status,
 															b.no_ktp as id_pelanggan,b.nama_pelanggan,b.alamat
 															FROM pengiriman as a INNER JOIN pelanggan as b
 															ON a.penerima=b.no_ktp 
@@ -109,6 +109,12 @@ elseif ($_GET['alert'] == 3) { ?>
 								$tanggal        = $data['tgl_pengiriman'];
 								$tgl            = explode('-',$tanggal);
 								$tgl_pengiriman = $tgl[2]."-".$tgl[1]."-".$tgl[0];
+
+								if ($data['status']=='Proses Pengiriman') {
+									$kategori = 'Proses Pengiriman';
+								} else {
+									$kategori = 'Barang Terkirim';
+								}
                             ?>
                             	<tr>
 									<td width="30" class="center"><?php echo $no; ?></td>
